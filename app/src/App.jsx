@@ -15,7 +15,7 @@ const App = () => {
     const fetchFoodData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(BASE_URL);
+        const response = await fetch(BASE_URL + "/data.json"); // optional: if you use a separate JSON file
         const json = await response.json();
         setData(json);
         setFilteredData(json);
@@ -65,7 +65,7 @@ const App = () => {
 
   return (
     <>
-      <Container>
+      <Container bgImage={`${BASE_URL}/bg.png`}>
         <TopContainer>
           <div className="logo">
             <img src={`${BASE_URL}/yum.svg`} alt="logo" />
@@ -104,6 +104,9 @@ export default App;
 export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  background-image: url(${({ bgImage }) => bgImage});
+  background-size: cover;
+  background-position: center;
 `;
 
 const TopContainer = styled.section`
