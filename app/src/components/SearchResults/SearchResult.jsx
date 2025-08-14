@@ -1,21 +1,21 @@
 import styled from "styled-components";
 import { BASE_URL, Button, Container } from "../../App";
+
 const SearchResult = ({ data }) => {
   return (
     <FoodCardContainer>
       <Container>
         <FoodCards>
-          {data?.map(({ name, image, text, price }) => (
+          {data?.map(({ name, image, text }) => (
             <FoodCard key={name}>
               <div className="food_image">
-                <img src={BASE_URL + image} />
+                <img src={`${BASE_URL}${image}`} alt={name} />
               </div>
               <div className="food_info">
                 <div className="info">
                   <h3>{name}</h3>
                   <p>{text}</p>
                 </div>
-                {/* <Button>${price.toFixed(2)}</Button> */}
               </div>
             </FoodCard>
           ))}
@@ -26,11 +26,14 @@ const SearchResult = ({ data }) => {
 };
 
 export default SearchResult;
+
 const FoodCardContainer = styled.section`
   min-height: calc(100vh - 210px);
-  background-image: url("/bg.png");
+  background-image: url("/images/bg.png");
   background-size: cover;
+  background-position: center;
 `;
+
 const FoodCards = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -40,6 +43,7 @@ const FoodCards = styled.div`
   align-items: center;
   padding-top: 80px;
 `;
+
 const FoodCard = styled.div`
   width: 340px;
   height: 167px;
@@ -56,12 +60,11 @@ const FoodCard = styled.div`
       rgba(255, 255, 255, 0) 100%
     );
 
-  background: url(.png),
-    radial-gradient(
+  background: radial-gradient(
       90.16% 143.01% at 15.32% 21.04%,
       rgba(165, 239, 255, 0.2) 0%,
       rgba(110, 191, 244, 0.0447917) 77.08%,
-      rgba(70, 144, 213, 0) 100%
+      rgba(70, 144, 213, 0) 0% 100%
     );
   background-blend-mode: overlay, normal;
   backdrop-filter: blur(13.1842px);
@@ -85,8 +88,14 @@ const FoodCard = styled.div`
       margin-top: 4px;
       font-size: 12px;
     }
-    button {
-      font-size: 12px;
+  }
+
+  .food_image {
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
     }
   }
 `;

@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchResult from "./components/SearchResults/SearchResult";
 
-// export const BASE_URL = "http://localhost:9000";
 export const BASE_URL = "https://react-3-xiyb.onrender.com";
 
-
 const App = () => {
-  const [data, setData] = useState(null);
-  const [filteredData, setFilteredData] = useState(null);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedBtn, setSelectedBtn] = useState("all");
@@ -16,33 +14,28 @@ const App = () => {
   useEffect(() => {
     const fetchFoodData = async () => {
       setLoading(true);
-
       try {
         const response = await fetch(BASE_URL);
-
         const json = await response.json();
-
         setData(json);
         setFilteredData(json);
-        setLoading(false);
-      } catch (error) {
+      } catch {
         setError("Unable to fetch data");
+      } finally {
+        setLoading(false);
       }
     };
     fetchFoodData();
   }, []);
 
   const searchFood = (e) => {
-    const searchValue = e.target.value;
-
-    console.log(searchValue);
-
-    if (searchValue === "") {
-      setFilteredData(null);
+    const searchValue = e.target.value.toLowerCase();
+    if (!searchValue) {
+      setFilteredData(data);
+      return;
     }
-
-    const filter = data?.filter((food) =>
-      food.name.toLowerCase().includes(searchValue.toLowerCase())
+    const filter = data.filter((food) =>
+      food.name.toLowerCase().includes(searchValue)
     );
     setFilteredData(filter);
   };
@@ -53,54 +46,41 @@ const App = () => {
       setSelectedBtn("all");
       return;
     }
-
-    const filter = data?.filter((food) =>
-      food.type.toLowerCase().includes(type.toLowerCase())
+    const filter = data.filter(
+      (food) => food.type.toLowerCase() === type.toLowerCase()
     );
     setFilteredData(filter);
     setSelectedBtn(type);
   };
 
   const filterBtns = [
-    {
-      name: "All",
-      type: "all",
-    },
-    {
-      name: "9 a.m",
-      type: "breakfast",
-    },
-    {
-      name: "12 p.m",
-      type: "lunch",
-    },
-    {
-      name: "8 p.m",
-      type: "dinner",
-    },
+    { name: "All", type: "all" },
+    { name: "9 a.m", type: "breakfast" },
+    { name: "12 p.m", type: "lunch" },
+    { name: "8 p.m", type: "dinner" },
   ];
 
   if (error) return <div>{error}</div>;
-  if (loading) return <div>loading.....</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>
       <Container>
         <TopContainer>
           <div className="logo">
-            <img src="/yum.svg" alt="logo" />
-          </div>
+            <img src="https://react-3-xiyb.onrender.com/yum.svg" alt="logo" />
 
+          </div>
           <div className="search">
-            <input onChange={searchFood} placeholder="explore" />
+            <input onChange={searchFood} placeholder="Explore" />
           </div>
         </TopContainer>
 
         <FilterContainer>
           {filterBtns.map((value) => (
             <Button
-              isSelected={selectedBtn === value.type}
               key={value.name}
+              isSelected={selectedBtn === value.type}
               onClick={() => filterFood(value.type)}
             >
               {value.name}
@@ -108,7 +88,13 @@ const App = () => {
           ))}
         </FilterContainer>
       </Container>
-      <SearchResult data={filteredData} />
+
+      <SearchResult
+        data={filteredData.map((food) => ({
+          ...food,
+          image: `${BASE_URL}${food.image}`,
+        }))}
+      />
     </>
   );
 };
@@ -119,6 +105,7 @@ export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 `;
+
 const TopContainer = styled.section`
   height: 140px;
   display: flex;
@@ -141,7 +128,7 @@ const TopContainer = styled.section`
     }
   }
 
-  @media (0 < width < 600px) {
+  @media (max-width: 600px) {
     flex-direction: column;
     height: 120px;
   }
