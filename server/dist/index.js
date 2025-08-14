@@ -19,13 +19,14 @@ app.use("/images", express_1.default.static(path_1.default.join(__dirname, "../p
 app.get("/", (req, res) => {
     console.log(path_1.default.join(__dirname, "../public"));
     const foodData = [
-        { name: "Boiled Egg", text: "healthy", image: "/images/egg.png", type: "breakfast" },
-        { name: "RAMEN", text: "Need some korean touch.", image: "/images/ramen.png", type: "lunch" },
-        { name: "GRILLED CHICKEN", text: "Coz why not!!", image: "/images/chicken.png", type: "dinner" },
-        { name: "CAKE", text: "sweet tooth person.", image: "/images/cake.png", type: "dinner" },
-        { name: "BURGER", text: "an unhealthy salad", image: "/images/burger.png", type: "lunch" },
-        { name: "PANCAKE", text: "yum yum", image: "/images/pancake.png", type: "breakfast" },
-    ];
+    { name: "Boiled Egg", text: "healthy", image: "https://react-3-xiyb.onrender.com/images/egg.png", type: "breakfast" },
+    { name: "RAMEN", text: "Need some korean touch.", image: "https://react-3-xiyb.onrender.com/images/ramen.png", type: "lunch" },
+    { name: "GRILLED CHICKEN", text: "Coz why not!!", image: "https://react-3-xiyb.onrender.com/images/chicken.png", type: "dinner" },
+    { name: "CAKE", text: "sweet tooth person.", image: "https://react-3-xiyb.onrender.com/images/cake.png", type: "dinner" },
+    { name: "BURGER", text: "an unhealthy salad", image: "https://react-3-xiyb.onrender.com/images/burger.png", type: "lunch" },
+    { name: "PANCAKE", text: "yum yum", image: "https://react-3-xiyb.onrender.com/images/pancake.png", type: "breakfast" },
+];
+
     res.json(foodData);
 });
 
