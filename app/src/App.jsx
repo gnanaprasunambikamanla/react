@@ -68,9 +68,9 @@ const App = () => {
       <Container>
         <TopContainer>
           <div className="logo">
-            <img src="https://react-3-xiyb.onrender.com/yum.svg" alt="logo" />
-
+            <img src={`${BASE_URL}/yum.svg`} alt="logo" />
           </div>
+
           <div className="search">
             <input onChange={searchFood} placeholder="Explore" />
           </div>
