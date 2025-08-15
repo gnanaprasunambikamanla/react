@@ -68,7 +68,7 @@ const App = () => {
       <Container bgImage={`${BASE_URL}/bg.png`}>
         <TopContainer>
           <div className="logo">
-            <img src={`${BASE_URL}/yum.svg`} alt="logo" />
+            <img src= "yum.svg" alt="logo" />
           </div>
 
           <div className="search">
